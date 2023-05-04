@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+Created by Goivvy LLC sales@goivvy.com
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="goivvy_dynamic" resource="default" engine="innodb" comment="Goivvy Custom Dynamic Attribute">
+        <column xsi:type="int" name="id" unsigned="false" nullable="false" identity="true"
+                comment="Value ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Product ID"/>
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" identity="false"
+                comment="Attribute ID"/>
+        <column xsi:type="varchar" name="value" nullable="false" length="255" comment="Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="GOIVVY_DYNAMIC_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ENTITY_ID" table="goivvy_dynamic"
+                    column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="GOIVVY_DYNAMIC_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID" table="goivvy_dynamic"
+                    column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="GOIVVY_DYNAMIC_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+        <index referenceId="GOIVVY_DYNAMIC_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+    </table>
+</schema>
